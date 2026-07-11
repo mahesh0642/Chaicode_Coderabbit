@@ -1,0 +1,4 @@
+- [ ] Inspect Better Auth config for OAuth state/cookie settings
+- [ ] Patch `lib/auth.ts` to add explicit cookie configuration for OAuth state persistence
+- [ ] Restart dev server and test GitHub sign-in
+- [ ] If still failing, inspect cookie headers on callback route
