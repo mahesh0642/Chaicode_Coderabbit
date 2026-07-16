@@ -113,6 +113,8 @@ model PullRequest {
   @@map("pull_request")
 }
 
+
+
 model RepoSync {
   id             String    @id @default(cuid())
   installationId Int
