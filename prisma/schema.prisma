@@ -23,6 +23,10 @@ model User {
   email         String
   emailVerified Boolean   @default(false)
   image         String?
+  plan          String    @default("free")
+  razorpaySubscriptionId  String?
+  subscriptionStatus      String?
+  subscriptionRenewsAt    DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
@@ -30,7 +34,7 @@ model User {
 
   @@unique([email])
   @@map("user")
-  githunInstallation GithubInstallation?
+  githubInstallation GithubInstallation?
 }
 
 model Session {
@@ -113,8 +117,6 @@ model PullRequest {
   @@map("pull_request")
 }
 
-
-
 model RepoSync {
   id             String    @id @default(cuid())
   installationId Int
@@ -129,4 +131,3 @@ model RepoSync {
   @@unique([repoFullName])
   @@map("repo_sync")
 }
-

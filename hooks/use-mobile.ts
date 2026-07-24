@@ -6,14 +6,28 @@ export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
+    const getValue = () => window.innerWidth < MOBILE_BREAKPOINT
+
+    const mql = window.matchMedia(
+      `(max-width: ${MOBILE_BREAKPOINT - 1}px)`
+    )
+
     const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+      setIsMobile(getValue())
     }
+
+    // Avoid cascading renders by deferring the initial setState
+    queueMicrotask(() => {
+      setIsMobile(getValue())
+    })
+
     mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener("change", onChange)
+
+    return () => {
+      mql.removeEventListener("change", onChange)
+    }
   }, [])
 
   return !!isMobile
 }
+
